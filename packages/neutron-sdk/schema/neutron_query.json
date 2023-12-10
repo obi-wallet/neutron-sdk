@@ -142,7 +142,7 @@
       "additionalProperties": false
     },
     {
-      "description": "TokenFactory query. Given a subdenom minted by a contract via [`NeutronMsg::MintTokens`](crate::bindings::msg::NeutronMsg::MintTokens), returns the full denom as used by [`BankMsg::Send`](cosmwasm_std::BankMsg::Send).",
+      "description": "TokenFactory query. Given a subdenom minted by a contract via [`NeutronMsg::MintTokens`](crate::bindings::msg::NeutronMsg::MintTokens), returns the full denom as used by [`BankMsg::Send`](secret_cosmwasm_std::BankMsg::Send).",
       "type": "object",
       "required": [
         "full_denom"

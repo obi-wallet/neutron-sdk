@@ -5,7 +5,7 @@ use crate::{
     NeutronError, NeutronResult,
 };
 
-use cosmwasm_std::{Binary, Coin, CosmosMsg, CustomMsg, StdError, Uint128};
+use secret_cosmwasm_std::{Binary, Coin, CosmosMsg, CustomMsg, StdError, Uint128};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use serde_json_wasm::to_string;

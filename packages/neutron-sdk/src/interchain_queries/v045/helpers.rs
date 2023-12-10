@@ -5,7 +5,7 @@ use crate::interchain_queries::v045::types::{
     SUPPLY_PREFIX, VALIDATORS_KEY, WASM_CONTRACT_STORE_PREFIX,
 };
 use cosmos_sdk_proto::cosmos::staking::v1beta1::Commission as ValidatorCommission;
-use cosmwasm_std::{Binary, Decimal, Uint128};
+use secret_cosmwasm_std::{Binary, Decimal, Uint128};
 use std::str::{from_utf8, FromStr};
 
 /// Creates KV key to get **module** param by **key**

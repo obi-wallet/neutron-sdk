@@ -5,7 +5,7 @@ use crate::interchain_queries::v045::types::{
     Balances, Delegations, FeePool, GovernmentProposal, StakingValidator, TotalSupply,
 };
 use crate::NeutronResult;
-use cosmwasm_std::{Deps, Env};
+use secret_cosmwasm_std::{Deps, Env};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
@@ -47,7 +47,7 @@ pub struct ProposalResponse {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct DelegatorDelegationsResponse {
-    pub delegations: Vec<cosmwasm_std::Delegation>,
+    pub delegations: Vec<secret_cosmwasm_std::Delegation>,
     pub last_submitted_local_height: u64,
 }
 

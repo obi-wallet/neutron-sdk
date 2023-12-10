@@ -15,7 +15,7 @@ use crate::{
         create_validator_key, create_wasm_contract_store_key,
     },
 };
-use cosmwasm_std::Binary;
+use secret_cosmwasm_std::Binary;
 
 /// Creates a message to register an Interchain Query to get balance of account on remote chain for particular denom
 ///

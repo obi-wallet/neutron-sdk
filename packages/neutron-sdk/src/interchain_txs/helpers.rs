@@ -2,7 +2,7 @@ use cosmos_sdk_proto::{
     cosmos::base::abci::v1beta1::{MsgData, TxMsgData},
     traits::Message,
 };
-use cosmwasm_std::{Binary, StdError, StdResult};
+use secret_cosmwasm_std::{Binary, StdError, StdResult};
 
 /// Decodes acknowledgement into `Vec<MsgData>` structure
 pub fn decode_acknowledgement_response(data: Binary) -> StdResult<Vec<MsgData>> {

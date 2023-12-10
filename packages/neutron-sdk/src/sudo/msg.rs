@@ -1,5 +1,5 @@
 use crate::bindings::types::Height;
-use cosmwasm_std::Binary;
+use secret_cosmwasm_std::Binary;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 

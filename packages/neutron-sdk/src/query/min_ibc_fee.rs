@@ -2,7 +2,7 @@ use crate::{
     bindings::{msg::IbcFee, query::NeutronQuery},
     NeutronResult,
 };
-use cosmwasm_std::Deps;
+use secret_cosmwasm_std::Deps;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 

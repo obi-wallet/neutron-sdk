@@ -1,5 +1,5 @@
 use crate::{bindings::query::NeutronQuery, NeutronResult};
-use cosmwasm_std::{Coin, Deps};
+use secret_cosmwasm_std::{Coin, Deps};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 

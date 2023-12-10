@@ -1,4 +1,4 @@
-use cosmwasm_std::{Binary, Coin};
+use secret_cosmwasm_std::{Binary, Coin};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use std::fmt::Write as _;

@@ -10,7 +10,7 @@ use cosmos_sdk_proto::cosmos::{
     staking::v1beta1::{Delegation, Validator as CosmosValidator},
 };
 use cosmos_sdk_proto::traits::Message;
-use cosmwasm_std::{from_binary, Addr, Coin, Decimal, StdError, Uint128};
+use secret_cosmwasm_std::{from_binary, Addr, Coin, Decimal, StdError, Uint128};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use std::{ops::Div, str::FromStr};
@@ -146,6 +146,17 @@ impl KVReconstruct for FeePool {
     fn reconstruct(storage_values: &[StorageValue]) -> NeutronResult<FeePool> {
         let mut coins: Vec<Coin> = Vec::with_capacity(storage_values.len());
 
+        fn pow_uint128(base: u128, exponent: u32) -> Uint128 {
+            let mut result = Uint128::new(1);
+            let base = Uint128::new(base);
+        
+            for _ in 0..exponent {
+                result *= base;
+            }
+        
+            result
+        }
+
         for kv in storage_values {
             let cosmos_pool: CosmosFeePool = CosmosFeePool::decode(kv.value.as_slice())?;
 
@@ -155,9 +166,9 @@ impl KVReconstruct for FeePool {
                 // https://github.com/cosmos/cosmos-sdk/blob/9c145c827001222df2e3e1101010874aeac20997/types/decimal_test.go#L498
                 let amount: Uint128 = Uint128::from_str(pool_coin.amount.as_str())
                     .unwrap()
-                    .checked_div_floor(
-                        Decimal::one()
-                            .checked_mul(Decimal::from_ratio(10u64, 1u64).pow(DECIMAL_PLACES))
+                    .checked_div(
+                        Uint128::from(1u128)
+                            .checked_mul(pow_uint128(10u128, DECIMAL_PLACES))
                             .unwrap(),
                     )
                     .unwrap();
@@ -325,13 +336,13 @@ impl KVReconstruct for GovernmentProposal {
 /// A structure that can be reconstructed from **StorageValues**'s for the **Delegator Delegation Interchain Query**.
 /// Contains delegations which some delegator has on remote chain.
 pub struct Delegations {
-    pub delegations: Vec<cosmwasm_std::Delegation>,
+    pub delegations: Vec<secret_cosmwasm_std::Delegation>,
 }
 
 impl KVReconstruct for Delegations {
     fn reconstruct(storage_values: &[StorageValue]) -> NeutronResult<Delegations> {
         // We are taking 2 items chunks from starage_value to calculate one delegation
-        let mut delegations: Vec<cosmwasm_std::Delegation> =
+        let mut delegations: Vec<secret_cosmwasm_std::Delegation> =
             Vec::with_capacity(storage_values.len() / 2);
 
         if storage_values.is_empty() {
@@ -343,7 +354,7 @@ impl KVReconstruct for Delegations {
         if storage_values[0].value.is_empty() {
             // Incoming denom cannot be empty, it should always be configured on chain.
             // If we receive empty denom, that means incoming data structure is corrupted
-            // and we cannot build `cosmwasm_std::Delegation`'s using this data.
+            // and we cannot build `secret_cosmwasm_std::Delegation`'s using this data.
             return Err(NeutronError::InvalidQueryResultFormat(
                 "denom is empty".into(),
             ));
@@ -360,7 +371,7 @@ impl KVReconstruct for Delegations {
             }
             let delegation_sdk: Delegation = Delegation::decode(chunk[0].value.as_slice())?;
 
-            let mut delegation_std = cosmwasm_std::Delegation {
+            let mut delegation_std = secret_cosmwasm_std::Delegation {
                 delegator: Addr::unchecked(delegation_sdk.delegator_address.as_str()),
                 validator: delegation_sdk.validator_address,
                 amount: Default::default(),
@@ -368,7 +379,7 @@ impl KVReconstruct for Delegations {
 
             if chunk[1].value.is_empty() {
                 // At this point, incoming validator cannot be empty, that would be invalid,
-                // because delegation is already defined, so, building `cosmwasm_std::Delegation`
+                // because delegation is already defined, so, building `secret_cosmwasm_std::Delegation`
                 // from this data is impossible, incoming data is corrupted.post
                 return Err(NeutronError::InvalidQueryResultFormat(
                     "validator is empty".into(),

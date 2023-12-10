@@ -1,4 +1,4 @@
-use cosmwasm_std::{DecimalRangeExceeded, OverflowError, StdError};
+use secret_cosmwasm_std::{DecimalRangeExceeded, OverflowError, StdError};
 use serde_json_wasm;
 use thiserror::Error;
 

@@ -1,5 +1,5 @@
 use crate::bindings::types::{InterchainQueryResult, RegisteredQuery};
-use cosmwasm_std::{Binary, CustomQuery};
+use secret_cosmwasm_std::{Binary, CustomQuery};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
@@ -48,7 +48,7 @@ pub enum NeutronQuery {
 
     /// TokenFactory query. Given a subdenom minted by a contract via
     /// [`NeutronMsg::MintTokens`](crate::bindings::msg::NeutronMsg::MintTokens),
-    /// returns the full denom as used by [`BankMsg::Send`](cosmwasm_std::BankMsg::Send).
+    /// returns the full denom as used by [`BankMsg::Send`](secret_cosmwasm_std::BankMsg::Send).
     FullDenom {
         creator_addr: String,
         subdenom: String,
